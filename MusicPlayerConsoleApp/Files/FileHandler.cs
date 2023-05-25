@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MusicPlayerConsoleApp.Files
+﻿namespace MusicPlayerConsoleApp.Files
 {
     public class FileHandler
     {
         readonly List<string> extensions = new List<string> {"wav"};
-        public List<File> listAllFiles(string path)
+        public List<FileSong> listAllFiles(string path)
         {
-            List<File> files = new List<File>();
+            List<FileSong> files = new List<FileSong>();
 
             foreach (string extension in extensions)
             {
@@ -19,7 +13,7 @@ namespace MusicPlayerConsoleApp.Files
                 
                 for (int i = 0; i < listFiles.Length; i++)
                 {
-                    File file = getInfo(listFiles[i]);
+                    FileSong file = getInfo(listFiles[i]);
                     file.path = listFiles[i];
                     files.Add(file);
                 }
@@ -27,13 +21,29 @@ namespace MusicPlayerConsoleApp.Files
             return files;
         }
 
-        public File getInfo(string filePath)
+        private FileSong getInfo(string filePath)
         {
             FileInfo fileInfo = new FileInfo(filePath);
 
-            File file = new File(fileInfo.Name, fileInfo.Extension);
+            FileSong file = new FileSong(fileInfo.Name, fileInfo.Extension);
 
             return file;
+        }
+
+        public void displayAllSongs(List<FileSong> files)
+        {
+            if (files.Count > 0)
+            {
+                Console.WriteLine("-------------- Songs available --------------");
+                for (int i = 0; i < files.Count; i++)
+                {
+                    Console.WriteLine(files[i].name);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No songs available");
+            }
         }
     }
 }

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace MusicPlayerConsoleApp.Files
 {
-    public class File
+    public class FileSong
     {
         public string name { get; set; }
         public string extension { get; set; }
         public string path { get; set; }
 
-        public File(string name, string extension)
+        public FileSong(string name, string extension)
         {
             this.name = name;
             this.extension = extension;
