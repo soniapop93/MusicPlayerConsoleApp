@@ -2,7 +2,7 @@
 {
     public class FileHandler
     {
-        readonly List<string> extensions = new List<string> {"wav"};
+        readonly List<string> extensions = new List<string> {"*.wav"};
         public List<FileSong> listAllFiles(string path)
         {
             List<FileSong> files = new List<FileSong>();

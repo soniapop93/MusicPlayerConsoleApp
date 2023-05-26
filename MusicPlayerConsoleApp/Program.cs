@@ -1,4 +1,5 @@
 ﻿using MusicPlayerConsoleApp.Files;
+using MusicPlayerConsoleApp.Player;
 using MusicPlayerConsoleApp.User;
 
 public class Program
@@ -30,35 +31,53 @@ public class Program
 
         UserInput userInput = new UserInput();
         FileHandler fileHandler = new FileHandler();
+        PlayerLogic playerLogic = new PlayerLogic(); 
 
-        Console.WriteLine("Please add the path from where do you want to play the songs: ");
-
-        string path = userInput.getUserInput();
-
-        if (!String.IsNullOrEmpty(path))
+        while (true)
         {
-            List<FileSong> files = fileHandler.listAllFiles(path);
+            Console.WriteLine("Please add the path from where do you want to play the songs: ");
 
-            fileHandler.displayAllSongs(files);
+            string path = userInput.getUserInput();
 
-            string songInput = userInput.getUserInput();
-
-            if (!String.IsNullOrEmpty(songInput))
+            if (!String.IsNullOrEmpty(path))
             {
+                List<FileSong> files = fileHandler.listAllFiles(path);
+
+                fileHandler.displayAllSongs(files);
+
+                Console.WriteLine("Select a song: ");
+
+                string songInput = userInput.getUserInput();
+
+                if (!String.IsNullOrEmpty(songInput))
+                {
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        if (files[i].name.Equals(songInput))
+                        {
+                            Console.WriteLine("----> Selected song: " + files[i].name);
+                            FileSong songSelected = files[i];
+                            playerLogic.playSong(songSelected);
+                            break;
+                        }
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("No song selected...");
+                }
+
 
             }
             else
             {
-                Console.WriteLine("No song selected...");
+                Console.WriteLine("Path is empty or null. Please add again...");
             }
 
+        }
 
-        }
-        else
-        {
-            Console.WriteLine("Path is empty or null. Please add again...");
-        }
-       
+
 
         Console.WriteLine("------------------------ SCRIPT FINISHED ------------------------");
     }
