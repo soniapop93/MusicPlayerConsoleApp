@@ -13,7 +13,8 @@ public class Program
 
            [X] takes path from user where the files are
            [X] list all songs
-           [ ] user should select the song by name
+           [X] user should select the song by name
+           [ ] can play songs
            [ ] can pause songs
            [ ] can stop songs
            [ ] will play next song in list
@@ -39,6 +40,18 @@ public class Program
             List<FileSong> files = fileHandler.listAllFiles(path);
 
             fileHandler.displayAllSongs(files);
+
+            string songInput = userInput.getUserInput();
+
+            if (!String.IsNullOrEmpty(songInput))
+            {
+
+            }
+            else
+            {
+                Console.WriteLine("No song selected...");
+            }
+
 
         }
         else
