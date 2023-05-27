@@ -15,10 +15,11 @@ public class Program
            [X] takes path from user where the files are
            [X] list all songs
            [X] user should select the song by name
-           [ ] can play songs
+           [X] can play songs
            [ ] can pause songs
            [ ] can stop songs
            [ ] will play next song in list
+           [ ] show song that currently playing
            [ ] can have option to shuffle the songs
            [ ] can play song on loop
            [ ] can exit the player and the song will stop
@@ -58,7 +59,9 @@ public class Program
                             Console.WriteLine("----> Selected song: " + files[i].name);
                             FileSong songSelected = files[i];
                             playerLogic.playSong(songSelected);
-                            break;
+                            
+                            //TODO: logic to stop the song
+
                         }
                     }
 

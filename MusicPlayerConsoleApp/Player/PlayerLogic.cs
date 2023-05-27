@@ -1,16 +1,24 @@
 ﻿using MusicPlayerConsoleApp.Files;
-using System.Media;
-using System.Numerics;
+using NAudio.Wave;
 
 namespace MusicPlayerConsoleApp.Player
 {
     public class PlayerLogic
     {
-        SoundPlayer soundPlayer = new SoundPlayer();
+        WaveOutEvent outputDevice = new WaveOutEvent();
+
         public void playSong(FileSong fileSong)
         {
-            soundPlayer.SoundLocation = fileSong.path;
-            soundPlayer.Play();
+            AudioFileReader audioFile = new AudioFileReader(fileSong.path);
+            outputDevice.Init(audioFile);
+            outputDevice.Play();
+
+            while (outputDevice.PlaybackState == PlaybackState.Playing)
+            {
+                Console.WriteLine(audioFile.CurrentTime + " out of " + audioFile.TotalTime);
+                Thread.Sleep(1000);
+            }
         }
+
     }
 }
