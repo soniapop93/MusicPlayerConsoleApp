@@ -70,8 +70,6 @@ public class Program
                 {
                     Console.WriteLine("No song selected...");
                 }
-
-
             }
             else
             {
@@ -79,9 +77,6 @@ public class Program
             }
 
         }
-
-
-
         Console.WriteLine("------------------------ SCRIPT FINISHED ------------------------");
     }
 }
