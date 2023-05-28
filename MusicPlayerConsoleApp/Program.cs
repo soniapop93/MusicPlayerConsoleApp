@@ -14,11 +14,11 @@ public class Program
 
            [X] takes path from user where the files are
            [X] list all songs
-           [X] user should select the song by name
+           [X] user should select the song by number
            [X] can play songs
-           [ ] can pause songs
-           [ ] can stop songs
-           [ ] will play next song in list
+           [X] can pause songs
+           [X] can stop songs
+           [X] will play next song in list
            [ ] show song that currently playing
            [ ] can have option to shuffle the songs
            [ ] can play song on loop
@@ -32,50 +32,78 @@ public class Program
 
         UserInput userInput = new UserInput();
         FileHandler fileHandler = new FileHandler();
-        PlayerLogic playerLogic = new PlayerLogic(); 
+        MusicPlayer musicPlayer = new MusicPlayer();
 
-        while (true)
+
+        //string optionMenu = "Select option: \n " +
+        //    "1 - Add folder \n" +
+        //    "2 - Add song to playlist\n" +
+        //    "3 - Play all songs \n" +
+        //    "4 - Select song to play \n" +
+        //    "5 - Pause song \n" +
+        //    "6 - Stop song \n" +
+        //    "7 - Play next song \n" +
+        //    "8 - Delete song from playlist \n" +
+        //    "9 - Suffle playlist \n" +
+        //    "10 - Play song in loop \n" +
+        //    "11 - EXIT player";
+
+        Console.WriteLine("Please add the path from where do you want to play the songs: ");
+        string path = userInput.getUserInput();
+
+        if (!String.IsNullOrEmpty(path)) 
         {
-            Console.WriteLine("Please add the path from where do you want to play the songs: ");
+            List<FileSong> songs = fileHandler.getAllFiles(path);
+            List<FileSong> songsToPlay = new List<FileSong>();
 
-            string path = userInput.getUserInput();
-
-            if (!String.IsNullOrEmpty(path))
+            if (songs.Count > 0)
             {
-                List<FileSong> files = fileHandler.listAllFiles(path);
+                fileHandler.displayAllSongs(songs);
 
-                fileHandler.displayAllSongs(files);
+                Console.WriteLine("Add song number you want to play: ");
+                string songNumberInput = userInput.getUserInput();
 
-                Console.WriteLine("Select a song: ");
-
-                string songInput = userInput.getUserInput();
-
-                if (!String.IsNullOrEmpty(songInput))
+                if (!String.IsNullOrEmpty(songNumberInput) && songs.Contains(songs[Int32.Parse(songNumberInput) - 1]))
                 {
-                    for (int i = 0; i < files.Count; i++)
-                    {
-                        if (files[i].name.Equals(songInput))
-                        {
-                            Console.WriteLine("----> Selected song: " + files[i].name);
-                            FileSong songSelected = files[i];
-                            playerLogic.playSong(songSelected);
-                            
-                            //TODO: logic to stop the song
 
+                    for (int i = Int32.Parse(songNumberInput) - 1; i < songs.Count; i++)
+                    {
+                        songsToPlay.Add(songs[i]);
+                    }
+
+                    Console.WriteLine("Select option: \n" +
+                        "1 - Play only the selected song \n" +
+                        "2 - Play from the selected song \n" +
+                        "3 - Play in loop the selected song \n " +
+                        "4 - Pause song\n" +
+                        "5 - Stop song\n" +
+                        "6 - Shuffle songs\n" +
+                        "7 - EXIT player");
+
+                    musicPlayer.addSongs(songsToPlay);
+
+                    string selectedOptionInput = userInput.getUserInput();
+
+                    if (!String.IsNullOrEmpty(selectedOptionInput))
+                    {
+                        switch (selectedOptionInput)
+                        {
+                            case "1":
+                                break;
                         }
                     }
 
+                    musicPlayer.play();
                 }
                 else
                 {
-                    Console.WriteLine("No song selected...");
+                    Console.WriteLine("No correct song selected");
                 }
             }
             else
             {
-                Console.WriteLine("Path is empty or null. Please add again...");
+                Console.WriteLine("There are no songs available");
             }
-
         }
         Console.WriteLine("------------------------ SCRIPT FINISHED ------------------------");
     }

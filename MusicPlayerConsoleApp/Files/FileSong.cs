@@ -11,6 +11,7 @@ namespace MusicPlayerConsoleApp.Files
         public string name { get; set; }
         public string extension { get; set; }
         public string path { get; set; }
+        public int id { get; set; }
 
         public FileSong(string name, string extension)
         {

@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace MusicPlayerConsoleApp.Player
 {
-    public class PlayerLogic
+    public class MusicPlayer
     {
         enum PlayerState
         {
@@ -25,9 +25,10 @@ namespace MusicPlayerConsoleApp.Player
         
         Thread playThread;
 
-        public PlayerLogic() 
+        public MusicPlayer() 
         {
             playThread = new Thread(startThread);
+            playThread.Start();
         }
 
         public void addSong(FileSong fileSong) 
@@ -75,17 +76,17 @@ namespace MusicPlayerConsoleApp.Player
             }
         }
 
-        public void pauseSong()
+        public void pause()
         {
             currentState = PlayerState.PAUSED;
         }
 
-        public void stopSong()
+        public void stop()
         {
             currentState = PlayerState.STOPPED;
         }
 
-        public void startSong()
+        public void play()
         {
             currentState = PlayerState.PLAYING;
         }

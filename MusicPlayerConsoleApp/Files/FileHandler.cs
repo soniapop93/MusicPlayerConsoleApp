@@ -2,8 +2,8 @@
 {
     public class FileHandler
     {
-        readonly List<string> extensions = new List<string> {"*.wav"};
-        public List<FileSong> listAllFiles(string path)
+        readonly List<string> extensions = new List<string> {"*.wav", "*.mp3"};
+        public List<FileSong> getAllFiles(string path)
         {
             List<FileSong> files = new List<FileSong>();
 
@@ -21,6 +21,7 @@
             return files;
         }
 
+
         private FileSong getInfo(string filePath)
         {
             FileInfo fileInfo = new FileInfo(filePath);
@@ -37,7 +38,8 @@
                 Console.WriteLine("-------------- Songs available --------------");
                 for (int i = 0; i < files.Count; i++)
                 {
-                    Console.WriteLine(files[i].name);
+                    files[i].id = i + 1;
+                    Console.WriteLine(i + 1.ToString() + " -> " + files[i].name);
                 }
             }
             else
