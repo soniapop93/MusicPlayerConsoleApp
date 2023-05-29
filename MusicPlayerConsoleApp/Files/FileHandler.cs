@@ -39,7 +39,7 @@
                 for (int i = 0; i < files.Count; i++)
                 {
                     files[i].id = i + 1;
-                    Console.WriteLine(i + 1.ToString() + " -> " + files[i].name);
+                    Console.WriteLine((i + 1).ToString() + " -> " + files[i].name);
                 }
             }
             else

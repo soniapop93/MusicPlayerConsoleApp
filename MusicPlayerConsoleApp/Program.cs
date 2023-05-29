@@ -66,19 +66,17 @@ public class Program
                 if (!String.IsNullOrEmpty(songNumberInput) && songs.Contains(songs[Int32.Parse(songNumberInput) - 1]))
                 {
 
-                    for (int i = Int32.Parse(songNumberInput) - 1; i < songs.Count; i++)
-                    {
-                        songsToPlay.Add(songs[i]);
-                    }
+                    //for (int i = Int32.Parse(songNumberInput) - 1; i < songs.Count; i++)
+                    //{
+                    //    songsToPlay.Add(songs[i]);
+                    //}
 
                     Console.WriteLine("Select option: \n" +
                         "1 - Play only the selected song \n" +
                         "2 - Play from the selected song \n" +
-                        "3 - Play in loop the selected song \n " +
-                        "4 - Pause song\n" +
-                        "5 - Stop song\n" +
-                        "6 - Shuffle songs\n" +
-                        "7 - EXIT player");
+                        "3 - Play in loop the selected song \n" +
+                        "4 - Shuffle songs \n" +
+                        "5 - EXIT player");
 
                     musicPlayer.addSongs(songsToPlay);
 
@@ -88,8 +86,30 @@ public class Program
                     {
                         switch (selectedOptionInput)
                         {
-                            case "1":
+                            default:
+                                Console.WriteLine("No correct option selected");
                                 break;
+
+                            case "1": // 1 - Play only the selected song
+                                List<FileSong> optionOneList = new List<FileSong>();
+                                optionOneList.Add(songs[Int32.Parse(selectedOptionInput)]);
+
+                                musicPlayer.addSongs(optionOneList);
+                                musicPlayer.play();
+
+                                break;
+
+                            case "2": // 2 - Play from the selected song
+                                break;
+
+                            case "3": // 3 - Play in loop the selected song
+                                break;
+
+                            case "4": // 4 - Shuffle songs
+                                break;
+
+                            case "5": // 5 - EXIT player
+                                return;
                         }
                     }
 
