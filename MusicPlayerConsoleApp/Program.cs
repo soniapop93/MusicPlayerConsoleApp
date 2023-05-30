@@ -35,19 +35,6 @@ public class Program
         MusicPlayer musicPlayer = new MusicPlayer();
 
 
-        //string optionMenu = "Select option: \n " +
-        //    "1 - Add folder \n" +
-        //    "2 - Add song to playlist\n" +
-        //    "3 - Play all songs \n" +
-        //    "4 - Select song to play \n" +
-        //    "5 - Pause song \n" +
-        //    "6 - Stop song \n" +
-        //    "7 - Play next song \n" +
-        //    "8 - Delete song from playlist \n" +
-        //    "9 - Suffle playlist \n" +
-        //    "10 - Play song in loop \n" +
-        //    "11 - EXIT player";
-
         Console.WriteLine("Please add the path from where do you want to play the songs: ");
         string path = userInput.getUserInput();
 
@@ -91,11 +78,44 @@ public class Program
                                 break;
 
                             case "1": // 1 - Play only the selected song
+                                Console.WriteLine("Option selected: 1 - Play only the selected song");
                                 List<FileSong> optionOneList = new List<FileSong>();
                                 optionOneList.Add(songs[Int32.Parse(selectedOptionInput)]);
 
                                 musicPlayer.addSongs(optionOneList);
                                 musicPlayer.play();
+
+                                Console.WriteLine("1 - Play \n" +
+                                                  "2 - Pause \n" +
+                                                  "3 - Stop \n" +
+                                                  "4 - Previous song \n" +
+                                                  "5 - Next song \n" +
+                                                  "6 - EXIT player");
+
+                                string inputOptionMusicPlayer = userInput.getUserInput();
+
+                                if (!String.IsNullOrEmpty(inputOptionMusicPlayer))
+                                {
+                                    switch (inputOptionMusicPlayer)
+                                    {
+                                        case "1": // 1 - Play
+                                            musicPlayer.play();
+                                            break;
+                                        case "2": // 2 - Pause
+                                            musicPlayer.pause();
+                                            break;
+                                        case "3": // 3 - Stop
+                                            musicPlayer.stop();
+                                            break;
+                                        case "4": // 4 - Previous song
+                                            break;
+                                        case "5": // 5 - Next song
+                                            break;
+                                        case "6": // 6 - EXIT player
+                                            return;
+                                    }
+                                }
+
 
                                 break;
 
