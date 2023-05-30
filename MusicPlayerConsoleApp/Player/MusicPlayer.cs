@@ -13,7 +13,8 @@ namespace MusicPlayerConsoleApp.Player
             PAUSED
         }
 
-        PlayerState currentState = PlayerState.STOPPED;
+        volatile PlayerState previousState = PlayerState.STOPPED;
+        volatile PlayerState currentState = PlayerState.STOPPED;
 
         WaveOutEvent outputDevice = new WaveOutEvent();
 
@@ -63,8 +64,11 @@ namespace MusicPlayerConsoleApp.Player
         }
         private void playSong(FileSong fileSong)
         {
-            audioFile = new AudioFileReader(fileSong.path);
-            outputDevice.Init(audioFile);
+            if (previousState != PlayerState.PAUSED)
+            {
+                audioFile = new AudioFileReader(fileSong.path);
+                outputDevice.Init(audioFile);
+            }
             outputDevice.Play();
         }
 
@@ -72,23 +76,44 @@ namespace MusicPlayerConsoleApp.Player
         {
             if (audioFile != null)
             {
-                Console.WriteLine(audioFile.CurrentTime + " out of " + audioFile.TotalTime);
+                //Console.WriteLine(audioFile.CurrentTime + " out of " + audioFile.TotalTime);
             }
         }
 
         public void pause()
         {
+            previousState = currentState;
             currentState = PlayerState.PAUSED;
         }
 
         public void stop()
         {
+            previousState = currentState;
             currentState = PlayerState.STOPPED;
         }
 
         public void play()
         {
+            previousState = currentState;
             currentState = PlayerState.PLAYING;
+        }
+
+        public void previous()
+        {
+            outputDevice.Stop();
+            if (indexSongPlaying != 0)
+                indexSongPlaying--;
+            playSong(fileSongs[indexSongPlaying]);
+        }
+
+        public void next()
+        {
+            outputDevice.Stop();
+            if (indexSongPlaying != fileSongs.Count - 1)
+            {
+                indexSongPlaying++;
+            }
+            playSong(fileSongs[indexSongPlaying]);
         }
 
         private void startThread()

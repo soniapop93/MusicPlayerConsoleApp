@@ -33,6 +33,7 @@ public class Program
         UserInput userInput = new UserInput();
         FileHandler fileHandler = new FileHandler();
         MusicPlayer musicPlayer = new MusicPlayer();
+        string inputOptionMusicPlayer = "";
 
 
         Console.WriteLine("Please add the path from where do you want to play the songs: ");
@@ -41,10 +42,10 @@ public class Program
         if (!String.IsNullOrEmpty(path)) 
         {
             List<FileSong> songs = fileHandler.getAllFiles(path);
-            List<FileSong> songsToPlay = new List<FileSong>();
 
             if (songs.Count > 0)
             {
+
                 fileHandler.displayAllSongs(songs);
 
                 Console.WriteLine("Add song number you want to play: ");
@@ -52,20 +53,12 @@ public class Program
 
                 if (!String.IsNullOrEmpty(songNumberInput) && songs.Contains(songs[Int32.Parse(songNumberInput) - 1]))
                 {
-
-                    //for (int i = Int32.Parse(songNumberInput) - 1; i < songs.Count; i++)
-                    //{
-                    //    songsToPlay.Add(songs[i]);
-                    //}
-
                     Console.WriteLine("Select option: \n" +
                         "1 - Play only the selected song \n" +
                         "2 - Play from the selected song \n" +
                         "3 - Play in loop the selected song \n" +
                         "4 - Shuffle songs \n" +
                         "5 - EXIT player");
-
-                    musicPlayer.addSongs(songsToPlay);
 
                     string selectedOptionInput = userInput.getUserInput();
 
@@ -79,20 +72,16 @@ public class Program
 
                             case "1": // 1 - Play only the selected song
                                 Console.WriteLine("Option selected: 1 - Play only the selected song");
-                                List<FileSong> optionOneList = new List<FileSong>();
-                                optionOneList.Add(songs[Int32.Parse(selectedOptionInput)]);
 
-                                musicPlayer.addSongs(optionOneList);
+                                musicPlayer.addSong(songs[Int32.Parse(selectedOptionInput) - 1]);
                                 musicPlayer.play();
 
                                 Console.WriteLine("1 - Play \n" +
                                                   "2 - Pause \n" +
                                                   "3 - Stop \n" +
-                                                  "4 - Previous song \n" +
-                                                  "5 - Next song \n" +
-                                                  "6 - EXIT player");
+                                                  "4 - EXIT player");
 
-                                string inputOptionMusicPlayer = userInput.getUserInput();
+                                inputOptionMusicPlayer = userInput.getUserInput();
 
                                 if (!String.IsNullOrEmpty(inputOptionMusicPlayer))
                                 {
@@ -101,17 +90,16 @@ public class Program
                                         case "1": // 1 - Play
                                             musicPlayer.play();
                                             break;
+
                                         case "2": // 2 - Pause
                                             musicPlayer.pause();
                                             break;
+
                                         case "3": // 3 - Stop
                                             musicPlayer.stop();
                                             break;
-                                        case "4": // 4 - Previous song
-                                            break;
-                                        case "5": // 5 - Next song
-                                            break;
-                                        case "6": // 6 - EXIT player
+
+                                        case "4": // 4 - EXIT player
                                             return;
                                     }
                                 }
@@ -120,6 +108,47 @@ public class Program
                                 break;
 
                             case "2": // 2 - Play from the selected song
+
+                                Console.WriteLine("Option selected: 2 - Play from the selected song");
+
+                                var x = songs.GetRange(Int32.Parse(songNumberInput) - 1, songs.Count - (Int32.Parse(songNumberInput) - 1));
+                                musicPlayer.addSongs(x);
+                                musicPlayer.play();
+
+                                Console.WriteLine("1 - Play \n" +
+                                                  "2 - Pause \n" +
+                                                  "3 - Stop \n" +
+                                                  "4 - Next song \n" +
+                                                  "5 - EXIT player");
+                                while (true)
+                                {
+                                    inputOptionMusicPlayer = userInput.getUserInput();
+
+                                    if (!String.IsNullOrEmpty(inputOptionMusicPlayer))
+                                    {
+                                        switch (inputOptionMusicPlayer)
+                                        {
+                                            case "1": // 1 - Play
+                                                musicPlayer.play();
+                                                break;
+
+                                            case "2": // 2 - Pause
+                                                musicPlayer.pause();
+                                                break;
+
+                                            case "3": // 3 - Stop
+                                                musicPlayer.stop();
+                                                break;
+
+                                            case "4": // 4 - Next song
+                                                musicPlayer.next();
+                                                break;
+
+                                            case "5": // 5 - EXIT player
+                                                return;
+                                        }
+                                    }
+                                }
                                 break;
 
                             case "3": // 3 - Play in loop the selected song
@@ -132,8 +161,6 @@ public class Program
                                 return;
                         }
                     }
-
-                    musicPlayer.play();
                 }
                 else
                 {
