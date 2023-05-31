@@ -1,6 +1,5 @@
 ﻿using MusicPlayerConsoleApp.Files;
 using NAudio.Wave;
-using System.Threading;
 
 namespace MusicPlayerConsoleApp.Player
 {
@@ -21,6 +20,8 @@ namespace MusicPlayerConsoleApp.Player
         List<FileSong> fileSongs = new List<FileSong>();
 
         int indexSongPlaying = 0;
+
+        volatile bool repeatSong = false;
 
         AudioFileReader audioFile;
         
@@ -55,16 +56,19 @@ namespace MusicPlayerConsoleApp.Player
                         {
                             return;
                         }
-                        showPlayedSongTimestamp();
+                        //showPlayedSongTimestamp();
                         Thread.Sleep(1000);
                     }
-                    indexSongPlaying++;
+                    if (!repeatSong)
+                    {
+                        indexSongPlaying++;
+                    }
                 }
             }
         }
         private void playSong(FileSong fileSong)
         {
-            if (previousState != PlayerState.PAUSED)
+            if (previousState != PlayerState.PAUSED || repeatSong)
             {
                 audioFile = new AudioFileReader(fileSong.path);
                 outputDevice.Init(audioFile);
@@ -72,12 +76,17 @@ namespace MusicPlayerConsoleApp.Player
             outputDevice.Play();
         }
 
-        public void showPlayedSongTimestamp()
+        //public void showPlayedSongTimestamp()
+        //{
+        //    if (audioFile != null)
+        //    {
+        //        //Console.WriteLine(audioFile.CurrentTime + " out of " + audioFile.TotalTime);
+        //    }
+        //}
+
+        public void loop(bool repeatSong)
         {
-            if (audioFile != null)
-            {
-                //Console.WriteLine(audioFile.CurrentTime + " out of " + audioFile.TotalTime);
-            }
+            this.repeatSong = repeatSong;
         }
 
         public void pause()
