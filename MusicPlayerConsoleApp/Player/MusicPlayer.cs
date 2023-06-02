@@ -24,7 +24,9 @@ namespace MusicPlayerConsoleApp.Player
         volatile bool repeatSong = false;
 
         AudioFileReader audioFile;
-        
+
+        Random rnd = new Random();
+
         Thread playThread;
 
         public MusicPlayer() 
@@ -87,6 +89,26 @@ namespace MusicPlayerConsoleApp.Player
         public void loop(bool repeatSong)
         {
             this.repeatSong = repeatSong;
+        }
+
+        public void shuffle()
+        {
+            List<FileSong> shuffledSongs = new List<FileSong>();
+
+            for (int i = 0; i < fileSongs.Count(); i++)
+            {
+                int indexRnd = rnd.Next(fileSongs.Count());
+
+                if (!shuffledSongs.Contains(fileSongs[indexRnd]))
+                {
+                    shuffledSongs.Add(fileSongs[indexRnd]);
+                }
+                else
+                {
+                    i--;
+                }
+            }
+            fileSongs = shuffledSongs;
         }
 
         public void pause()

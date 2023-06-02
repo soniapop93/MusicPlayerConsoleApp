@@ -19,10 +19,10 @@ public class Program
            [X] can pause songs
            [X] can stop songs
            [X] will play next song in list
-           [ ] show song that currently playing
-           [ ] can have option to shuffle the songs
-           [ ] can play song on loop
-           [ ] can exit the player and the song will stop
+           [X] show song that currently playing
+           [X] can have option to shuffle the songs
+           [X] can play song on loop
+           [X] can exit the player and the song will stop
         
            =============================================================
            =============================================================
@@ -121,7 +121,8 @@ public class Program
                                                   "2 - Pause \n" +
                                                   "3 - Stop \n" +
                                                   "4 - Next song \n" +
-                                                  "5 - EXIT player");
+                                                  "5 - Previous song \n" +
+                                                  "6 - EXIT player");
                                 while (true)
                                 {
                                     inputOptionMusicPlayer = userInput.getUserInput();
@@ -146,7 +147,11 @@ public class Program
                                                 musicPlayer.next();
                                                 break;
 
-                                            case "5": // 5 - EXIT player
+                                            case "5": // 5 - Previous song
+                                                musicPlayer.previous();
+                                                break;
+
+                                            case "6": // 6 - EXIT player
                                                 return;
                                         }
                                     }
@@ -191,6 +196,50 @@ public class Program
                                 break;
 
                             case "4": // 4 - Shuffle songs
+
+                                Console.WriteLine("1 - Play \n" +
+                                                  "2 - Pause \n" +
+                                                  "3 - Stop \n" +
+                                                  "4 - Next song \n" +
+                                                  "5 - Previous song \n" +
+                                                  "6 - EXIT player");
+                                musicPlayer.addSongs(songs);
+                                musicPlayer.shuffle();
+                                musicPlayer.play();
+
+                                while (true)
+                                {
+                                    inputOptionMusicPlayer = userInput.getUserInput();
+
+                                    if (!String.IsNullOrEmpty(inputOptionMusicPlayer))
+                                    {
+                                        switch (inputOptionMusicPlayer)
+                                        {
+                                            case "1": // 1 - Play
+                                                musicPlayer.play();
+                                                break;
+
+                                            case "2": // 2 - Pause
+                                                musicPlayer.pause();
+                                                break;
+
+                                            case "3": // 3 - Stop
+                                                musicPlayer.stop();
+                                                break;
+
+                                            case "4": // 4 - Next song
+                                                musicPlayer.next();
+                                                break;
+
+                                            case "5": // 5 - Previous song
+                                                musicPlayer.previous();
+                                                break;
+
+                                            case "6": // 6 - EXIT player
+                                                return;
+                                        }
+                                    }
+                                }
                                 break;
 
                             case "5": // 5 - EXIT player
