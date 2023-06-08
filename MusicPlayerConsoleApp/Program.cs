@@ -102,6 +102,7 @@ public class Program
                                                 break;
 
                                             case "4": // 4 - EXIT player
+                                                musicPlayer.exit();
                                                 return;
                                         }
                                     }
@@ -152,6 +153,7 @@ public class Program
                                                 break;
 
                                             case "6": // 6 - EXIT player
+                                                musicPlayer.exit();
                                                 return;
                                         }
                                     }
@@ -189,6 +191,7 @@ public class Program
                                                 break;
            
                                             case "4": // 4 - EXIT player
+                                                musicPlayer.exit();
                                                 return;
                                         }
                                     }
@@ -236,6 +239,7 @@ public class Program
                                                 break;
 
                                             case "6": // 6 - EXIT player
+                                                musicPlayer.exit();
                                                 return;
                                         }
                                     }
@@ -243,6 +247,7 @@ public class Program
                                 break;
 
                             case "5": // 5 - EXIT player
+                                musicPlayer.exit();
                                 return;
                         }
                     }

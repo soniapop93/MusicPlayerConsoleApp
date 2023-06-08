@@ -9,7 +9,8 @@ namespace MusicPlayerConsoleApp.Player
         {
             PLAYING,
             STOPPED,
-            PAUSED
+            PAUSED,
+            EXIT
         }
 
         volatile PlayerState previousState = PlayerState.STOPPED;
@@ -33,6 +34,12 @@ namespace MusicPlayerConsoleApp.Player
         {
             playThread = new Thread(startThread);
             playThread.Start();
+        }
+
+        public void exit()
+        {
+            currentState = PlayerState.EXIT;
+            playThread.Join();
         }
 
         public void addSong(FileSong fileSong) 
@@ -164,6 +171,9 @@ namespace MusicPlayerConsoleApp.Player
                     case PlayerState.PAUSED:
                         outputDevice.Pause();
                         break;
+
+                    case PlayerState.EXIT:
+                        return;
                 }
             }
         }
